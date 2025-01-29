@@ -40,15 +40,10 @@ export var StaticBasemapTileLayer = TileLayer.extend({
         'An ArcGIS access token is required for static basemap tiles. To learn more, go to https://developers.arcgis.com/documentation/security-and-authentication/'
       );
     }
-    // If no style passed in
-    if (!style) {
+    // If no style passed in, or an invalid style is passed
+    if (!style || typeof style !== 'string' || style.length === 0) {
       throw new Error(
         'A valid style enum is required for staticBasemapTileLayer (e.g. \'beta/arcgis/streets\').'
-      );
-    }
-    if (!style.includes('beta')) {
-      throw new Error(
-        'The basemap styles service is currently in beta. All style enums must begin with \'beta\' (e.g. \'beta/arcgis/outdoor\').'
       );
     }
     // Set layer pane
@@ -61,6 +56,10 @@ export var StaticBasemapTileLayer = TileLayer.extend({
     this.options.zoomOffset = -1;
     this.options.tileSize = 512;
 
+    // Remove slash if style enum begins with one
+    if (style[0] === '/') {
+      style = style.substring(1, style.length);
+    }
     // Save style into "this.options" for use elsewhere in the module.
     this.options.style = style;
     this.serviceUrl = getStaticBasemapTilesUrl(style, this.options.token, this.options);
