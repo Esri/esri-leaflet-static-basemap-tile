@@ -43,7 +43,7 @@ export var StaticBasemapTileLayer = TileLayer.extend({
     // If no style passed in, or an invalid style is passed
     if (!style || typeof style !== 'string' || style.length === 0) {
       throw new Error(
-        'A valid style enum is required for staticBasemapTileLayer (e.g. \'beta/arcgis/streets\').'
+        'A valid style enum is required for staticBasemapTileLayer (e.g. \'arcgis/streets\').'
       );
     }
     // Set layer pane
