@@ -10,7 +10,7 @@
 > A plugin for Esri Leaflet to visualize static basemap tiles 
 from the static basemap tile service.
 
-The Esri Leaflet Static Basemap Tile package provides a class to load static basemap tiles from the [ArcGIS static basemap tile service](https://developers.arcgis.com/rest/basemap-styles/). Basemaps are rendered as image tiles that adhere to the [OpenAPI specification](https://static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/beta/specification/open-api-v3-0/).
+The Esri Leaflet Static Basemap Tile package provides a class to load static basemap tiles from the [ArcGIS static basemap tile service](https://developers.arcgis.com/rest/basemap-styles/). Basemaps are rendered as image tiles that adhere to the [OpenAPI specification](https://static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/v1/specification/open-api-v3-0/).
 
 ## Example
 
@@ -58,7 +58,7 @@ Check out the [live demo]().
     <script>
       var map = L.map("map").setView([40.706, -73.926], 4);
 
-      L.esri.Static.staticBasemapTileLayer("beta/arcgis/outdoor", {
+      L.esri.Static.staticBasemapTileLayer("arcgis/outdoor", {
         token: "< YOUR ARCGIS ACCESS TOKEN HERE >"
       }).addTo(map);
     </script>
@@ -73,16 +73,16 @@ Check out the [live demo]().
 
 `L.esri.Static.staticBasemapTileLayer(<String> style, <Object> options)`
 
-Displays a basemap layer using tiles from the ArcGIS [Static basemap tiles service](https://developers.arcgis.com/rest/static-basemap-tiles/) (currently in beta). Extends [L.TileLayer](https://leafletjs.com/reference.html#tilelayer).
+Displays a basemap layer using tiles from the ArcGIS [Static basemap tiles service](https://developers.arcgis.com/rest/static-basemap-tiles/). Extends [L.TileLayer](https://leafletjs.com/reference.html#tilelayer).
 
 ```js
-L.esri.Static.staticBasemapTileLayer("beta/arcgis/streets", {
+L.esri.Static.staticBasemapTileLayer("arcgis/streets", {
   token: "< YOUR ARCGIS ACCESS TOKEN HERE >"
 }).addTo(map);
 ```
 
 ```js
-L.esri.Static.staticBasemapTileLayer("beta/arcgis/newspaper", {
+L.esri.Static.staticBasemapTileLayer("arcgis/newspaper", {
   token: "< YOUR ARCGIS ACCESS TOKEN HERE >",
   language: "fr"
 }).addTo(map);
@@ -96,7 +96,7 @@ For a full list of parameters, go to the Esri Leaflet [API reference]().
 
 #### Basemap Styles
 
-`staticBasemapTileLayer` accepts a basemap style code as a string in the format `beta/<provider>/<style>`. For example, `beta/arcgis/outdoor` will load the [ArcGIS Outdoor](https://developers.arcgis.com/rest/static-basemap-tiles/arcgis-outdoor-tile-get/) basemap style.
+`staticBasemapTileLayer` accepts a basemap style enumeration as a string in the format `<provider>/<style>`. For example, `arcgis/outdoor` will load the [ArcGIS Outdoor](https://developers.arcgis.com/rest/static-basemap-tiles/arcgis-outdoor-tile-get/) basemap style.
 
 For a full list of supported basemap styles, go to the [static basemap tiles service documentation](https://developers.arcgis.com/rest/static-basemap-tiles/).
 
