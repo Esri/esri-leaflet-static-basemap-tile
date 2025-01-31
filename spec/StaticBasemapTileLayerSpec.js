@@ -19,7 +19,7 @@ const basemapStyle = 'arcgis/outdoor';
 const basemapStyleSlash = '/arcgis/outdoor'
 const languageCode = 'fr';
 
-const imageryLabels = 'beta/arcgis/imagery/labels'
+const imageryLabels = 'arcgis/imagery/labels'
 
 describe('StaticBasemapTileLayer', () => {
     it('should save the style enumeration from the constructor - basemapStyle', function () {
@@ -49,7 +49,7 @@ describe('StaticBasemapTileLayer', () => {
     it('should error if no style code is provided', function () {
       expect(function () {
         L.esri.Static.staticBasemapTileLayer('',{token:accessToken});
-      }).to.throw('A valid style enum is required for staticBasemapTileLayer (e.g. \'beta/arcgis/streets\').');
+      }).to.throw('A valid style enum is required for staticBasemapTileLayer (e.g. \'arcgis/streets\').');
     });
     it('should accept basemap style enumerations with a prepended slash', function () {
       const layer = L.esri.Static.staticBasemapTileLayer(basemapStyleSlash, {token:accessToken});

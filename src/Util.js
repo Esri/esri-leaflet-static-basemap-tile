@@ -14,7 +14,7 @@
  */
 import { request } from 'esri-leaflet';
 
-// URL of the static basemap tiles service (currently in Beta)
+// URL of the static basemap tiles service
 const baseUrl = 'https://static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/v1/';
 
 /**
