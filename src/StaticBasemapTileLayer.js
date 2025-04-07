@@ -12,15 +12,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { TileLayer, setOptions } from "leaflet";
-import { getStaticBasemapTilesUrl, fetchAttribution } from "./Util";
+import { TileLayer, setOptions } from 'leaflet';
+import { getStaticBasemapTilesUrl, fetchAttribution } from './Util';
 // import { Util } from 'esri-leaflet';
 
 // In the future, get this from Esri Leaflet Util:
 const POWERED_BY_ESRI_ATTRIBUTION_STRING =
   'Powered by <a href="https://www.esri.com">Esri</a>';
 
-export var StaticBasemapTileLayer = TileLayer.extend({
+export const StaticBasemapTileLayer = TileLayer.extend({
   initialize: function (style, options) {
     if (options) {
       setOptions(this, options);
@@ -38,11 +38,11 @@ export var StaticBasemapTileLayer = TileLayer.extend({
     // if no access token provided
     if (!this.options.token) {
       throw new Error(
-        "An ArcGIS access token is required for static basemap tiles. To learn more, go to https://developers.arcgis.com/documentation/security-and-authentication/"
+        'An ArcGIS access token is required for static basemap tiles. To learn more, go to https://developers.arcgis.com/documentation/security-and-authentication/'
       );
     }
     // If no style passed in, or an invalid style is passed
-    if (!style || typeof style !== "string" || style.length === 0) {
+    if (!style || typeof style !== 'string' || style.length === 0) {
       throw new Error(
         "A valid style enum is required for staticBasemapTileLayer (e.g. 'arcgis/streets')."
       );
@@ -50,15 +50,15 @@ export var StaticBasemapTileLayer = TileLayer.extend({
     // Set layer pane
     if (options.pane) {
       this.options.pane = options.pane;
-    } else if (style.includes("/labels")) {
-      this.options.pane = "esri-labels";
+    } else if (style.includes('/labels')) {
+      this.options.pane = 'esri-labels';
     }
 
     this.options.zoomOffset = -1;
     this.options.tileSize = 512;
 
     // Remove slash if style enum begins with one
-    if (style[0] === "/") {
+    if (style[0] === '/') {
       style = style.substring(1, style.length);
     }
     // Save style into "this.options" for use elsewhere in the module.
@@ -101,15 +101,15 @@ export var StaticBasemapTileLayer = TileLayer.extend({
     if (this._map.getPane(this.options.pane)) return;
 
     const pane = this._map.createPane(this.options.pane);
-    pane.style.pointerEvents = "none";
+    pane.style.pointerEvents = 'none';
 
     // Default value for tileLayer
     let zIndex = 200;
-    if (this.options.pane === "esri-labels") zIndex = 300;
+    if (this.options.pane === 'esri-labels') zIndex = 300;
     pane.style.zIndex = zIndex;
-  },
+  }
 });
 
-export function staticBasemapTileLayer(key, options) {
+export function staticBasemapTileLayer (key, options) {
   return new StaticBasemapTileLayer(key, options);
 }
