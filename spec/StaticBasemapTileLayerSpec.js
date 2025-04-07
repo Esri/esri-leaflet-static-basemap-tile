@@ -15,70 +15,100 @@
 
 /* eslint-env mocha */
 const accessToken = "1234";
-const basemapStyle = 'arcgis/outdoor';
-const basemapStyleSlash = '/arcgis/outdoor'
-const languageCode = 'fr';
+const basemapStyle = "arcgis/outdoor";
+const basemapStyleSlash = "/arcgis/outdoor";
+const languageCode = "fr";
+const imageryLabels = "arcgis/imagery/labels";
 
-const imageryLabels = 'arcgis/imagery/labels'
+describe("StaticBasemapTileLayer", () => {
+  it("should save the style enumeration from the constructor - basemapStyle", function () {
+    const layer = L.esri.Static.staticBasemapTileLayer(basemapStyle, {
+      token: accessToken,
+    });
 
-describe('StaticBasemapTileLayer', () => {
-    it('should save the style enumeration from the constructor - basemapStyle', function () {
-        const layer = L.esri.Static.staticBasemapTileLayer(basemapStyle, {token:accessToken});
-    
-        expect(layer.options.style).to.equal(basemapStyle);
+    expect(layer.options.style).to.equal(basemapStyle);
+  });
+  it("should accept a language parameter - languageCode", function () {
+    const layer = L.esri.Static.staticBasemapTileLayer(basemapStyle, {
+      token: accessToken,
+      language: languageCode,
     });
-    it('should accept a language parameter - languageCode', function () {
-      const layer = L.esri.Static.staticBasemapTileLayer(basemapStyle, {token:accessToken, language:languageCode});
-    
-      expect(layer.options.language).to.equal(languageCode);
-    });
-    it('should support the token parameter and propagate to the outdated apikey param - accessToken', function () {
-      const layer = L.esri.Static.staticBasemapTileLayer(basemapStyle, {token:accessToken});
-      expect(layer.options.token).to.equal(accessToken);
-      expect(layer.options.apikey).to.equal(accessToken);
-    });
-    it('should support the apikey param and alternate spelling apiKey - accessToken', function () {
-      const layer1 = L.esri.Static.staticBasemapTileLayer(basemapStyle, {apikey:accessToken});
-      expect(layer1.options.token).to.equal(accessToken);
-      expect(layer1.options.apikey).to.equal(accessToken);
 
-      const layer2 = L.esri.Static.staticBasemapTileLayer(basemapStyle, {apiKey:accessToken});
-      expect(layer2.options.token).to.equal(accessToken);
-      expect(layer2.options.apikey).to.equal(accessToken);
+    expect(layer.options.language).to.equal(languageCode);
+  });
+  it("should support the token parameter and propagate to the outdated apikey param - accessToken", function () {
+    const layer = L.esri.Static.staticBasemapTileLayer(basemapStyle, {
+      token: accessToken,
     });
-    it('should error if no style code is provided', function () {
-      expect(function () {
-        L.esri.Static.staticBasemapTileLayer('',{token:accessToken});
-      }).to.throw('A valid style enum is required for staticBasemapTileLayer (e.g. \'arcgis/streets\').');
+    expect(layer.options.token).to.equal(accessToken);
+    expect(layer.options.apikey).to.equal(accessToken);
+  });
+  it("should support the apikey param and alternate spelling apiKey - accessToken", function () {
+    const layer1 = L.esri.Static.staticBasemapTileLayer(basemapStyle, {
+      apikey: accessToken,
     });
-    it('should accept basemap style enumerations with a prepended slash', function () {
-      const layer = L.esri.Static.staticBasemapTileLayer(basemapStyleSlash, {token:accessToken});
-    
-      expect(layer.options.style).to.equal(basemapStyle);
-    })
-    it('should error if no access token is provided', function () {
-      expect(function () {
-        L.esri.Static.staticBasemapTileLayer(basemapStyle);
-      }).to.throw('An ArcGIS access token is required for static basemap tiles. To learn more, go to https://developers.arcgis.com/documentation/security-and-authentication/');
+    expect(layer1.options.token).to.equal(accessToken);
+    expect(layer1.options.apikey).to.equal(accessToken);
+
+    const layer2 = L.esri.Static.staticBasemapTileLayer(basemapStyle, {
+      apiKey: accessToken,
     });
-    it('should create static tiles in the \'tilePane\' by default', function () {
-      const layer = L.esri.Static.staticBasemapTileLayer(basemapStyle,{token:accessToken});
-      expect(layer.options.pane).to.equal('tilePane');
+    expect(layer2.options.token).to.equal(accessToken);
+    expect(layer2.options.apikey).to.equal(accessToken);
+  });
+  it("should error if no style code is provided", function () {
+    expect(function () {
+      L.esri.Static.staticBasemapTileLayer("", { token: accessToken });
+    }).to.throw(
+      "A valid style enum is required for staticBasemapTileLayer (e.g. 'arcgis/streets')."
+    );
+  });
+  it("should accept basemap style enumerations with a prepended slash", function () {
+    const layer = L.esri.Static.staticBasemapTileLayer(basemapStyleSlash, {
+      token: accessToken,
     });
-    it('should save the pane from the constructor', function () {
-      const layer = L.esri.Static.staticBasemapTileLayer(basemapStyle,{token:accessToken,
-        pane:'test-pane'
-      });
-      expect(layer.options.pane).to.equal('test-pane');
+
+    expect(layer.options.style).to.equal(basemapStyle);
+  });
+  it("should error if no access token is provided", function () {
+    expect(function () {
+      L.esri.Static.staticBasemapTileLayer(basemapStyle);
+    }).to.throw(
+      "An ArcGIS access token is required for static basemap tiles. To learn more, go to https://developers.arcgis.com/documentation/security-and-authentication/"
+    );
+  });
+  it("should create static tiles in the 'tilePane' by default", function () {
+    const layer = L.esri.Static.staticBasemapTileLayer(basemapStyle, {
+      token: accessToken,
     });
-    it('should set the pane to \'esri-labels\' for styles ending in \'\/labels\'', function () {
-      const layer = L.esri.Static.staticBasemapTileLayer(imageryLabels,{token:accessToken});
-      expect(layer.options.pane).to.equal('esri-labels');
+    expect(layer.options.pane).to.equal("tilePane");
+  });
+  it("should save the pane from the constructor", function () {
+    const layer = L.esri.Static.staticBasemapTileLayer(basemapStyle, {
+      token: accessToken,
+      pane: "test-pane",
     });
-    it('should override the \'esri-labels\' pane if a custom pane is provided for a style ending in \'\/labels\'', function () {
-      const layer = L.esri.Static.staticBasemapTileLayer(imageryLabels,{token:accessToken,
-        pane:'tilePane'
-      });
-      expect(layer.options.pane).to.equal('tilePane');
+    expect(layer.options.pane).to.equal("test-pane");
+  });
+  it("should set the pane to 'esri-labels' for styles ending in '/labels'", function () {
+    const layer = L.esri.Static.staticBasemapTileLayer(imageryLabels, {
+      token: accessToken,
     });
-})
+    expect(layer.options.pane).to.equal("esri-labels");
+  });
+  it("should override the 'esri-labels' pane if a custom pane is provided for a style ending in '/labels'", function () {
+    const layer = L.esri.Static.staticBasemapTileLayer(imageryLabels, {
+      token: accessToken,
+      pane: "tilePane",
+    });
+    expect(layer.options.pane).to.equal("tilePane");
+  });
+  it("should add the worldview property to the url if set", function () {
+    const layer = L.esri.Static.staticBasemapTileLayer(basemapStyle, {
+      token: accessToken,
+      worldview: "unitedStatesOfAmerica",
+    });
+    expect(layer.options.worldview).to.equal("unitedStatesOfAmerica");
+    expect(layer.serviceUrl).to.contain("worldview=unitedStatesOfAmerica");
+  });
+});

@@ -17,9 +17,10 @@ import { getStaticBasemapTilesUrl, fetchAttribution } from './Util';
 // import { Util } from 'esri-leaflet';
 
 // In the future, get this from Esri Leaflet Util:
-const POWERED_BY_ESRI_ATTRIBUTION_STRING = 'Powered by <a href="https://www.esri.com">Esri</a>';
+const POWERED_BY_ESRI_ATTRIBUTION_STRING =
+  'Powered by <a href="https://www.esri.com">Esri</a>';
 
-export var StaticBasemapTileLayer = TileLayer.extend({
+export const StaticBasemapTileLayer = TileLayer.extend({
   initialize: function (style, options) {
     if (options) {
       setOptions(this, options);
@@ -43,7 +44,7 @@ export var StaticBasemapTileLayer = TileLayer.extend({
     // If no style passed in, or an invalid style is passed
     if (!style || typeof style !== 'string' || style.length === 0) {
       throw new Error(
-        'A valid style enum is required for staticBasemapTileLayer (e.g. \'arcgis/streets\').'
+        "A valid style enum is required for staticBasemapTileLayer (e.g. 'arcgis/streets')."
       );
     }
     // Set layer pane
@@ -62,7 +63,11 @@ export var StaticBasemapTileLayer = TileLayer.extend({
     }
     // Save style into "this.options" for use elsewhere in the module.
     this.options.style = style;
-    this.serviceUrl = getStaticBasemapTilesUrl(style, this.options.token, this.options);
+    this.serviceUrl = getStaticBasemapTilesUrl(
+      style,
+      this.options.token,
+      this.options
+    );
 
     TileLayer.prototype.initialize.call(this, this.serviceUrl, this.options);
   },
@@ -80,7 +85,7 @@ export var StaticBasemapTileLayer = TileLayer.extend({
   },
   _setupAttribution: function () {
     if (!this._map) return;
-    fetchAttribution(this.options.style, this.options.token).then(attribution => {
+    fetchAttribution(this.options).then((attribution) => {
       // Add attribution directly to map
       this.currentAttribution = `${POWERED_BY_ESRI_ATTRIBUTION_STRING} | ${attribution}`;
       this._map.attributionControl.addAttribution(this.currentAttribution);
